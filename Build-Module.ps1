@@ -1,5 +1,6 @@
 pushd $PSScriptRoot
 dotnet build
 dotnet publish
-New-ExternalHelp docs -OutputPath src\SelectXmlExtensions\bin\Debug\netcoreapp3.0\publish
+$framework = (Select-Xml '/Project/PropertyGroup/TargetFramework/text()' .\src\SelectXmlExtensions\SelectXmlExtensions.fsproj).Node.Value
+New-ExternalHelp docs -OutputPath src\SelectXmlExtensions\bin\Debug\$framework\publish
 popd

@@ -11,7 +11,7 @@ type AddXmlNodePosition = | AppendChild = 0 | InsertAfter = 1 | InsertBefore = 2
 
 /// Insert XML into an XML document relative to a node found by Select-Xml.
 [<Cmdlet("Add", "Xml")>]
-[<OutputType(typeof<SelectXmlInfo>)>]
+[<OutputType(typeof<XmlDocument>)>]
 type AddXmlCommand () =
     inherit PSCmdlet ()
 
@@ -72,6 +72,9 @@ type AddXmlCommand () =
 
     override x.ProcessRecord () =
         base.ProcessRecord ()
-        if x.shouldAdd x.SelectXmlInfo.Node then
-            x.add x.SelectXmlInfo.Node
-        x.WriteObject x.SelectXmlInfo
+        if x.shouldAdd x.SelectXmlInfo.Node then x.add x.SelectXmlInfo.Node
+        match x.SelectXmlInfo.Path with
+        | null | "InputStream" -> x.WriteObject x.SelectXmlInfo.Node.OwnerDocument
+        | _ ->
+            use xw = new XmlTextWriter(x.SelectXmlInfo.Path, Text.Encoding.UTF8)
+            x.SelectXmlInfo.Node.OwnerDocument.Save(xw)
