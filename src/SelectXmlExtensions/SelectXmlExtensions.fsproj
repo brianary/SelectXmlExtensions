@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Include="AddXmlCommand.fs" />
     <Compile Include="RemoveXmlCommand.fs" />
+    <Compile Include="GetXmlValueCommand.fs" />
+    <Compile Include="SetXmlValueCommand.fs" />
   </ItemGroup>
 
   <ItemGroup>

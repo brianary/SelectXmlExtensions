@@ -37,7 +37,7 @@ type AddXmlCommand () =
     member val Namespace : Hashtable = Hashtable() with get, set
 
     /// Output from the Select-Xml cmdlet.
-    [<Parameter(Mandatory=true,ValueFromPipeline=true)>]
+    [<Parameter(Mandatory=true, ValueFromPipeline=true)>]
     member val SelectXmlInfo : SelectXmlInfo = null with get, set
     member val ns : XmlNamespaceManager = XmlNamespaceManager (NameTable ()) with get
     member val shouldAdd : (XmlNode -> bool) = (fun _ -> true) with get, set
@@ -45,6 +45,7 @@ type AddXmlCommand () =
 
     override x.BeginProcessing () =
         base.BeginProcessing ()
+        for k in x.Namespace.Keys do x.ns.AddNamespace(k :?> string, x.Namespace.[k] :?> string)
         let subNodes (d : XmlDocument) = d.ChildNodes |> Seq.cast<XmlNode>
         let appendChild (at : XmlNode) x = at.AppendChild(at.OwnerDocument.ImportNode(x, true)) |> ignore
         let insertAfter (at : XmlNode) x = at.ParentNode.InsertAfter(at.OwnerDocument.ImportNode(x, true), at) |> ignore
@@ -54,7 +55,6 @@ type AddXmlCommand () =
             match x.Position with
             | AddXmlNodePosition.InsertAfter | AddXmlNodePosition.PrependChild -> Seq.collect (subNodes >> Seq.rev) x.Xml
             | _ -> Seq.collect subNodes x.Xml
-        for k in x.Namespace.Keys do x.ns.AddNamespace(k :?> string, x.Namespace.[k] :?> string)
         x.shouldAdd <-
             match x.UnlessXPath with
             | null -> fun _ -> true
@@ -74,7 +74,8 @@ type AddXmlCommand () =
         base.ProcessRecord ()
         if x.shouldAdd x.SelectXmlInfo.Node then x.add x.SelectXmlInfo.Node
         match x.SelectXmlInfo.Path with
-        | null | "InputStream" -> x.WriteObject x.SelectXmlInfo.Node.OwnerDocument
+        | "InputStream" | "" | null -> x.WriteObject x.SelectXmlInfo.Node.OwnerDocument
         | _ ->
+            x.SelectXmlInfo.Node.OwnerDocument.PreserveWhitespace <- true
             use xw = new XmlTextWriter(x.SelectXmlInfo.Path, Text.Encoding.UTF8)
             x.SelectXmlInfo.Node.OwnerDocument.Save(xw)

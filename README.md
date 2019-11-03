@@ -18,4 +18,4 @@ Tests
 Tests are written for [Pester](https://github.com/Pester/Pester).
 
 To run the tests, run `Invoke-Pester .\SelectXmlExtensions.Tests.ps1` or `.\test.cmd`.
-(The latter won't lock the module DLL for repeated testing.)
+(The latter won't lock the module DLL for recompiling and repeated testing.)

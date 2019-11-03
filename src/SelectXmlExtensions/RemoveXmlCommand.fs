@@ -12,7 +12,7 @@ type RemoveXmlCommand () =
     inherit PSCmdlet ()
 
     /// Output from the Select-Xml cmdlet.
-    [<Parameter(Mandatory=true,ValueFromPipeline=true)>]
+    [<Parameter(Mandatory=true, ValueFromPipeline=true)>]
     member val SelectXmlInfo : SelectXmlInfo = null with get, set
 
     override x.ProcessRecord () =
@@ -22,9 +22,14 @@ type RemoveXmlCommand () =
                 "RootRequired",ErrorCategory.InvalidArgument,x.SelectXmlInfo)
                 |> x.ThrowTerminatingError
             failwith "RootRequired"
-        x.SelectXmlInfo.Node.ParentNode.RemoveChild(x.SelectXmlInfo.Node) |> ignore
+        match x.SelectXmlInfo.Node.ParentNode with
+        | :? XmlElement as p ->
+            p.RemoveChild(x.SelectXmlInfo.Node) |> ignore
+            p.IsEmpty <- not p.HasChildNodes
+        | p -> p.RemoveChild(x.SelectXmlInfo.Node) |> ignore
         match x.SelectXmlInfo.Path with
         | "InputStream" | "" | null -> x.WriteObject x.SelectXmlInfo.Node.OwnerDocument
         | _ ->
+            x.SelectXmlInfo.Node.OwnerDocument.PreserveWhitespace <- true
             use xw = new XmlTextWriter(x.SelectXmlInfo.Path,Text.Encoding.UTF8)
             x.SelectXmlInfo.Node.OwnerDocument.Save(xw)

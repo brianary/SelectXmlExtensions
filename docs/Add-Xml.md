@@ -25,6 +25,8 @@ usually this is used to stop the same node from being re-added.
 This allows you to write idempotent scripts, which you can run multiple times to get the same result,
 instead of unexpectedly adding the same XML multiple times because you don't know if the script has already been run.
 
+If selecting from a file, the file will be updated instead of returning the updated XML document.
+
 ## EXAMPLES
 
 ### Example 1
