@@ -91,7 +91,8 @@ Accept wildcard characters: False
 ```
 
 ### -AttributeName
-{{ Fill AttributeName Description }}
+
+The name of an attribute to set for selected elements (ignored for other node types).
 
 ```yaml
 Type: String
@@ -106,7 +107,8 @@ Accept wildcard characters: False
 ```
 
 ### -AttributeNamespaceUri
-{{ Fill AttributeNamespaceUri Description }}
+
+The optional namespace URI for the attribute name.
 
 ```yaml
 Type: String
@@ -121,7 +123,8 @@ Accept wildcard characters: False
 ```
 
 ### -AttributeValue
-{{ Fill AttributeValue Description }}
+
+The value of an attribute to set for selected elements (ignored for other node types).
 
 ```yaml
 Type: String
