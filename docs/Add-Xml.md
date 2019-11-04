@@ -38,16 +38,16 @@ The appSettings node is located in app.config, and the Version setting is added 
 
 ## PARAMETERS
 
-### -Namespace
-Specifies a hash table of the namespaces used in UnlessXPath. Use the format `@{prefix = 'uri'}`
+### -Xml
+The XML node(s) to insert.
 
 ```yaml
-Type: Hashtable
+Type: XmlDocument[]
 Parameter Sets: (All)
-Aliases:
+Aliases: Node, Element
 
-Required: False
-Position: Named
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -65,7 +65,37 @@ Where to insert the new node(s), relative to the node found by Select-Xml.
 Type: AddXmlNodePosition
 Parameter Sets: (All)
 Aliases:
-Accepted values: AppendChild, InsertAfter, InsertBefore, PrependChild
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UnlessXPath
+An XPath, relative to the node found by Select-Xml, that will cancel the insert if it exists.
+Used to prevent inserting XML already in the document.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: IfMissing
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Namespace
+Specifies a hash table of the namespaces used in UnlessXPath. Use the format `@{prefix = 'uri'}`
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -86,37 +116,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -UnlessXPath
-An XPath, relative to the node found by Select-Xml, that will cancel the insert if it exists.
-Used to prevent inserting XML already in the document.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: IfMissing
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Xml
-The XML node(s) to insert.
-
-```yaml
-Type: XmlDocument[]
-Parameter Sets: (All)
-Aliases: Node, Element
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

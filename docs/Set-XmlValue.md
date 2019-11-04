@@ -12,8 +12,15 @@ Sets the value of a node found by Select-Xml.
 
 ## SYNTAX
 
+### NodeValue (Default)
 ```
 Set-XmlValue [-Value] <String> -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
+```
+
+### AttributeValue
+```
+Set-XmlValue -AttributeName <String> -AttributeValue <String> [-AttributeNamespaceUri <String>]
+ -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,9 +35,23 @@ PS C:\> (Select-Xml /a/@href -Xml ([xml]'<a href="https://example.com/">link</a>
 <a href="https://example.org/">link</a>
 ```
 
-### Example 1
+### Example 2
 ```powershell
 PS C:\> (Select-Xml /a -Xml ([xml]'<a href="https://example.com/">link</a>') |Set-XmlValue Example).OuterXml
+
+<a href="https://example.com/">Example</a>
+```
+
+### Example 3
+```powershell
+PS C:\> (Select-Xml /a -Xml ([xml]'<a href="https://example.com/">link</a>') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+
+<a href="https://example.com/">Example</a>
+```
+
+### Example 4
+```powershell
+PS C:\> (Select-Xml /a -Xml ([xml]'<a>link</a>') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
 
 <a href="https://example.com/">Example</a>
 ```
@@ -59,11 +80,56 @@ The new text value of the node.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: NodeValue
 Aliases:
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AttributeName
+{{ Fill AttributeName Description }}
+
+```yaml
+Type: String
+Parameter Sets: AttributeValue
+Aliases: NameOfAttribute
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AttributeNamespaceUri
+{{ Fill AttributeNamespaceUri Description }}
+
+```yaml
+Type: String
+Parameter Sets: AttributeValue
+Aliases: NS, NamespaceUri
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AttributeValue
+{{ Fill AttributeValue Description }}
+
+```yaml
+Type: String
+Parameter Sets: AttributeValue
+Aliases: ValueOfAttribute
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

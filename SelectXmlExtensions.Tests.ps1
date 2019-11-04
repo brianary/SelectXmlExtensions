@@ -84,13 +84,24 @@ Describe 'SelectXmlExtensions' {
 	Context Set-XmlValue {
 		It ("Given source document '<XmlDocument>' searched for '<XPath>', " +
 			"setting value '<Value>' returns '<Expected>'") -TestCases @(
-			@{ XmlDocument = '<a />'; XPath = '/a'; value = 'test'; Expected = '<a>test</a>' }
+			@{ XmlDocument = '<a />'; XPath = '/a'; Value = 'test'; Expected = '<a>test</a>' }
 			@{ XmlDocument = '<a b="1" />'; XPath = '/a/@b'; Value = '2'; Expected = '<a b="2" />' }
 			@{ XmlDocument = '<a><b /><b /><b /></a>'; XPath = '/a/b'; Value = 'c'
 				Expected = '<a><b>c</b><b>c</b><b>c</b></a>' }
 		) {
 			Param($XmlDocument,$XPath,$Value,$Expected)
 			[xml]$result = Select-Xml $XPath -Xml ([xml]$XmlDocument) |Set-XmlValue $Value |select -Last 1
+			$result.OuterXml |Should -BeExactly $Expected
+		}
+		It ("Given source document '<XmlDocument>' searched for '<XPath>', " +
+			"setting attribute name '<AttributeName>' to value '<AttributeValue>' returns '<Expected>'") -TestCases @(
+			@{ XmlDocument = '<a />'; XPath = '/a'; AttributeName = 'b'; AttributeValue = 'test'; Expected = '<a b="test" />' }
+			@{ XmlDocument = '<a b="c" />'; XPath = '/a'; AttributeName = 'b'; AttributeValue = 'test'; Expected = '<a b="test" />' }
+		) {
+			Param($XmlDocument,$XPath,$AttributeName,$AttributeValue,$Expected)
+			[xml]$result = Select-Xml $XPath -Xml ([xml]$XmlDocument) |
+				Set-XmlValue -AttributeName $AttributeName -AttributeValue $AttributeValue |
+				select -Last 1
 			$result.OuterXml |Should -BeExactly $Expected
 		}
 		It ("Given source document file containing '<XmlDocument>' searched for '<XPath>', " +
@@ -103,6 +114,20 @@ Describe 'SelectXmlExtensions' {
 			Param($XmlDocument,$XPath,$Value,$Expected)
 			Set-Content TestDrive:\test.xml $XmlDocument
 			Select-Xml $XPath -Path TestDrive:\test.xml |Set-XmlValue $Value
+			# read the file, strip the XML PI by comparing only the root document element
+			Get-Content TestDrive:\test.xml -Raw |
+				foreach {([xml]$_).DocumentElement.OuterXml} |
+				Should -BeExactly $Expected
+		}
+		It ("Given source document file containing '<XmlDocument>' searched for '<XPath>', " +
+			"setting attribute name '<AttributeName>' to value '<AttributeValue>' updates the file to '<Expected>'") -TestCases @(
+			@{ XmlDocument = '<a />'; XPath = '/a'; AttributeName = 'b'; AttributeValue = 'test'; Expected = '<a b="test" />' }
+			@{ XmlDocument = '<a b="c" />'; XPath = '/a'; AttributeName = 'b'; AttributeValue = 'test'; Expected = '<a b="test" />' }
+		) {
+			Param($XmlDocument,$XPath,$AttributeName,$AttributeValue,$Expected)
+			Set-Content TestDrive:\test.xml $XmlDocument
+			Select-Xml $XPath -Path TestDrive:\test.xml |
+				Set-XmlValue -AttributeName $AttributeName -AttributeValue $AttributeValue
 			# read the file, strip the XML PI by comparing only the root document element
 			Get-Content TestDrive:\test.xml -Raw |
 				foreach {([xml]$_).DocumentElement.OuterXml} |
