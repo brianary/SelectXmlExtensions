@@ -6,7 +6,7 @@ open System.Xml
 open Microsoft.PowerShell.Commands
 
 /// Removes a node found by Select-Xml from its XML document.
-[<Cmdlet("Remove", "Xml")>]
+[<Cmdlet(VerbsCommon.Remove, "Xml")>]
 [<OutputType(typeof<XmlDocument>)>]
 type RemoveXmlCommand () =
     inherit PSCmdlet ()

@@ -5,7 +5,7 @@ open System.Xml
 open Microsoft.PowerShell.Commands
 
 /// Returns the text value of a node found by Select-Xml.
-[<Cmdlet("Get", "XmlValue")>]
+[<Cmdlet(VerbsCommon.Get, "XmlValue")>]
 [<OutputType(typeof<string>)>]
 type GetXmlValueCommand () =
     inherit PSCmdlet ()

@@ -6,7 +6,7 @@ open System.Xml
 open Microsoft.PowerShell.Commands
 
 /// Sets the text value of a node found by Select-Xml.
-[<Cmdlet("Set", "XmlValue", DefaultParameterSetName = "NodeValue")>]
+[<Cmdlet(VerbsCommon.Set, "XmlValue", DefaultParameterSetName = "NodeValue")>]
 [<OutputType(typeof<XmlDocument>)>]
 type SetXmlAttributeCommand () =
     inherit PSCmdlet ()

@@ -10,7 +10,7 @@ open Microsoft.PowerShell.Commands
 type AddXmlNodePosition = | AppendChild = 0 | InsertAfter = 1 | InsertBefore = 2 | PrependChild = 3
 
 /// Insert XML into an XML document relative to a node found by Select-Xml.
-[<Cmdlet("Add", "Xml")>]
+[<Cmdlet(VerbsCommon.Add, "Xml")>]
 [<OutputType(typeof<XmlDocument>)>]
 type AddXmlCommand () =
     inherit PSCmdlet ()

@@ -5,6 +5,27 @@
 & "$PSScriptRoot\Import-Module.ps1"
 
 Describe 'SelectXmlExtensions' {
+	Context 'SelectXmlExtensions module' {
+		It "Given the SelectXmlExtensions module, it should have a nonzero version" {
+			$m = Get-Module SelectXmlExtensions
+			$m.Version |Should -Not -Be $null
+			$m.Version.Major |Should -BeGreaterThan 0
+		}
+		It "Given the SelectXmlExtensions module, the DLL should have a nonzero file version" {
+			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
+			$v.FileVersionRaw |Should -Not -Be $null
+			$v.FileVersionRaw.Major |Should -BeGreaterThan 0
+		} -Skip
+		It "Given the SelectXmlExtensions module, the DLL should have a nonzero product version" {
+			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
+			$v.ProductVersionRaw |Should -Not -Be $null
+			$v.ProductVersionRaw.Major |Should -BeGreaterThan 0
+		} -Skip
+		It "Given the SelectXmlExtensions module, the DLL should have a valid semantic product version" {
+			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
+			[semver]::TryParse($v.ProductVersion, [ref]$null) |Should -BeTrue
+		} -Skip
+	}
 	Context Add-Xml {
 		It ("Given source document '<XmlDocument>' searched for '<XPath>', " +
 			"adding -Xml '<Xml>' at the default position eventually returns '<Expected>'") -TestCases @(
