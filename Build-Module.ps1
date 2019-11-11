@@ -8,15 +8,16 @@
 pushd $PSScriptRoot
 $targetFramework = (Select-Xml '/Project/PropertyGroup/TargetFramework/text()' `
 	.\src\SelectXmlExtensions\SelectXmlExtensions.fsproj).Node.Value
-$pubdir = ".\src\SelectXmlExtensions\bin\$Configuration\$targetFramework\publish"
+$pubdir = ".\src\SelectXmlExtensions\bin\$Configuration\$targetFramework"
 if($Clean)
 {
 	dotnet clean
 	Remove-Item .\src\SelectXmlExtensions\bin -Recurse -Force
 }
-dotnet publish --configuration $Configuration
-if((Get-Command New-ExternalHelp -EA 0)) { New-ExternalHelp docs -OutputPath $pubdir -Force }
+if((Get-Command New-ExternalHelp -EA 0)) { New-ExternalHelp docs -OutputPath .\src\SelectXmlExtensions -Force }
 else { Write-Warning 'Unable to update MAML help, is platyPS installed?' }
+dotnet build -c $Configuration
+dotnet pack -c $Configuration
 (Get-Item $pubdir\SelectXmlExtensions.dll).VersionInfo
 if($Install)
 {

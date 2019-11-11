@@ -13,7 +13,7 @@ Removes a node found by Select-Xml from its XML document.
 ## SYNTAX
 
 ```
-Remove-Xml -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
+Remove-Xml [-SelectXmlInfo] <SelectXmlInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,7 +25,7 @@ If selecting from a file, the file will be updated instead of returning the upda
 
 ### EXAMPLE 1
 ```
-Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml.ps1
+Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml
 ```
 
 Removes the specified node from the file.
@@ -41,7 +41,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False

@@ -13,8 +13,8 @@ Insert XML into an XML document relative to a node found by Select-Xml.
 ## SYNTAX
 
 ```
-Add-Xml [-Xml] <XmlDocument[]> [-Position <AddXmlNodePosition>] [-UnlessXPath <String>]
- [-Namespace <Hashtable>] -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
+Add-Xml [-Xml] <XmlDocument[]> [-Position <String>] [[-UnlessXPath] <String>] [[-Namespace] <Hashtable>]
+ -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,7 +31,7 @@ If selecting from a file, the file will be updated instead of returning the upda
 
 ### Example 1
 ```powershell
-PS C:\> Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
+PS C:\> Select-Xml /configuration/appSettings app.config |Add-Xml '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
 ```
 
 The appSettings node is located in app.config, and the Version setting is added if it isn't already present.
@@ -47,7 +47,7 @@ Parameter Sets: (All)
 Aliases: Node, Element
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +62,7 @@ Where to insert the new node(s), relative to the node found by Select-Xml.
 - PrependChild: At the beginning of the node's children.
 
 ```yaml
-Type: AddXmlNodePosition
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -83,7 +83,7 @@ Parameter Sets: (All)
 Aliases: IfMissing
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -98,7 +98,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

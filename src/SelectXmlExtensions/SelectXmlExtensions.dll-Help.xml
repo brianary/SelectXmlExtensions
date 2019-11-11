@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Add-Xml</command:name>
+      <command:verb>Add</command:verb>
+      <command:noun>Xml</command:noun>
+      <maml:description>
+        <maml:para>Insert XML into an XML document relative to a node found by Select-Xml.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This cmdlet puts new XML nodes into a document, inside or next to a node found by the Select-Xml cmdlet. If you provide a value for -UnlessXPath, it will only add the new XML if the XPath provided does not find a node, usually this is used to stop the same node from being re-added.</maml:para>
+      <maml:para>This allows you to write idempotent scripts, which you can run multiple times to get the same result, instead of unexpectedly adding the same XML multiple times because you don't know if the script has already been run.</maml:para>
+      <maml:para>If selecting from a file, the file will be updated instead of returning the updated XML document.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Add-Xml</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="Node, Element">
+          <maml:name>Xml</maml:name>
+          <maml:Description>
+            <maml:para>The XML node(s) to insert.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">XmlDocument[]</command:parameterValue>
+          <dev:type>
+            <maml:name>XmlDocument[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="IfMissing">
+          <maml:name>UnlessXPath</maml:name>
+          <maml:Description>
+            <maml:para>An XPath, relative to the node found by Select-Xml, that will cancel the insert if it exists. Used to prevent inserting XML already in the document.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Namespace</maml:name>
+          <maml:Description>
+            <maml:para>Specifies a hash table of the namespaces used in UnlessXPath. Use the format `@{prefix = 'uri'}`</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Position</maml:name>
+          <maml:Description>
+            <maml:para>Where to insert the new node(s), relative to the node found by Select-Xml.</maml:para>
+            <maml:para>- AppendChild: At the end of the node's children.</maml:para>
+            <maml:para>- InsertAfter: Following the node.</maml:para>
+            <maml:para>- InsertBefore: Preceding the node.</maml:para>
+            <maml:para>- PrependChild: At the beginning of the node's children.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:Description>
+            <maml:para>The output from Select-Xml.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>SelectXmlInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="Node, Element">
+        <maml:name>Xml</maml:name>
+        <maml:Description>
+          <maml:para>The XML node(s) to insert.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">XmlDocument[]</command:parameterValue>
+        <dev:type>
+          <maml:name>XmlDocument[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Position</maml:name>
+        <maml:Description>
+          <maml:para>Where to insert the new node(s), relative to the node found by Select-Xml.</maml:para>
+          <maml:para>- AppendChild: At the end of the node's children.</maml:para>
+          <maml:para>- InsertAfter: Following the node.</maml:para>
+          <maml:para>- InsertBefore: Preceding the node.</maml:para>
+          <maml:para>- PrependChild: At the beginning of the node's children.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="IfMissing">
+        <maml:name>UnlessXPath</maml:name>
+        <maml:Description>
+          <maml:para>An XPath, relative to the node found by Select-Xml, that will cancel the insert if it exists. Used to prevent inserting XML already in the document.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Namespace</maml:name>
+        <maml:Description>
+          <maml:para>Specifies a hash table of the namespaces used in UnlessXPath. Use the format `@{prefix = 'uri'}`</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Hashtable</command:parameterValue>
+        <dev:type>
+          <maml:name>Hashtable</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>SelectXmlInfo</maml:name>
+        <maml:Description>
+          <maml:para>The output from Select-Xml.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>Microsoft.PowerShell.Commands.SelectXmlInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The output from Select-Xml.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Microsoft.PowerShell.Commands.SelectXmlInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Returned when Select-Xml queries an in-memory XML document or string (null when querying a file).</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Select-Xml /configuration/appSettings app.config |Add-Xml '&lt;add key="Version" value="2.0"/&gt;' -UnlessXPath 'add[@key="Version"]'</dev:code>
+        <dev:remarks>
+          <maml:para>The appSettings node is located in app.config, and the Version setting is added if it isn't already present.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Select-Xml</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-XmlValue</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>XmlValue</command:noun>
+      <maml:description>
+        <maml:para>Returns the value of an XML node found by Select-Xml.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This cmdlet returns the text value of a node found by Select-Xml.</maml:para>
+      <maml:para>If selecting from a file, the file will be updated instead of returning the updated XML document.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-XmlValue</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:Description>
+            <maml:para>The output from Select-Xml.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>SelectXmlInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>SelectXmlInfo</maml:name>
+        <maml:Description>
+          <maml:para>The output from Select-Xml.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>Microsoft.PowerShell.Commands.SelectXmlInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The output of Select-Xml.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The text value of the selected node.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Select-Xml /a -Xml ([xml]'&lt;a&gt;B&lt;/a&gt;') |Get-XmlValue
+
+B</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Select-Xml /a -Xml ([xml]'&lt;a href="https://example.org/"&gt;link&lt;/a&gt;') |Get-XmlValue
+
+https://example.org/</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Select-Xml</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Remove-Xml</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>Xml</command:noun>
+      <maml:description>
+        <maml:para>Removes a node found by Select-Xml from its XML document.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This cmdlet removes XML nodes found by Select-Xml from their document.</maml:para>
+      <maml:para>If selecting from a file, the file will be updated instead of returning the updated XML document.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-Xml</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:Description>
+            <maml:para>Output from the Select-Xml cmdlet.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>SelectXmlInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+        <maml:name>SelectXmlInfo</maml:name>
+        <maml:Description>
+          <maml:para>Output from the Select-Xml cmdlet.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>Microsoft.PowerShell.Commands.SelectXmlInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Output from the Select-Xml cmdlet.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Xml.XmlDocument</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml</dev:code>
+        <dev:remarks>
+          <maml:para>Removes the specified node from the file.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Select-Xml</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-XmlValue</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>XmlValue</command:noun>
+      <maml:description>
+        <maml:para>Sets the value of a node found by Select-Xml.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This cmdlet sets the text value of a selected XML node.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-XmlValue</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:Description>
+            <maml:para>The new text value of the node.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:Description>
+            <maml:para>The output from Select-Xml.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>SelectXmlInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Set-XmlValue</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:Description>
+            <maml:para>The output from Select-Xml.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+          <dev:type>
+            <maml:name>SelectXmlInfo</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NameOfAttribute">
+          <maml:name>AttributeName</maml:name>
+          <maml:Description>
+            <maml:para>The name of an attribute to set for selected elements (ignored for other node types).</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NS, NamespaceUri">
+          <maml:name>AttributeNamespaceUri</maml:name>
+          <maml:Description>
+            <maml:para>The optional namespace URI for the attribute name.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ValueOfAttribute">
+          <maml:name>AttributeValue</maml:name>
+          <maml:Description>
+            <maml:para>The value of an attribute to set for selected elements (ignored for other node types).</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>SelectXmlInfo</maml:name>
+        <maml:Description>
+          <maml:para>The output from Select-Xml.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">SelectXmlInfo</command:parameterValue>
+        <dev:type>
+          <maml:name>SelectXmlInfo</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Value</maml:name>
+        <maml:Description>
+          <maml:para>The new text value of the node.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NameOfAttribute">
+        <maml:name>AttributeName</maml:name>
+        <maml:Description>
+          <maml:para>The name of an attribute to set for selected elements (ignored for other node types).</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NS, NamespaceUri">
+        <maml:name>AttributeNamespaceUri</maml:name>
+        <maml:Description>
+          <maml:para>The optional namespace URI for the attribute name.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ValueOfAttribute">
+        <maml:name>AttributeValue</maml:name>
+        <maml:Description>
+          <maml:para>The value of an attribute to set for selected elements (ignored for other node types).</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>Microsoft.PowerShell.Commands.SelectXmlInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The output from Select-Xml.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Xml.XmlDocument</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The modified XML document (if not selected from a file).</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; (Select-Xml /a/@href -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue https://example.org/).OuterXml
+
+&lt;a href="https://example.org/"&gt;link&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue Example).OuterXml
+
+&lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+
+&lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a&gt;link&lt;/a&gt;') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+
+&lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Select-Xml</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+</helpItems>
