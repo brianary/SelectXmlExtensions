@@ -31,6 +31,13 @@ If selecting from a file, the file will be updated instead of returning the upda
 
 ### Example 1
 ```powershell
+PS C:\> ('<a />' |Select-Xml /a |Add-Xml '<b />').OuterXml
+
+<a><b /></a>
+```
+
+### Example 2
+```powershell
 PS C:\> Select-Xml /configuration/appSettings app.config |Add-Xml '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
 ```
 

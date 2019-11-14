@@ -18,12 +18,12 @@ type SetXmlAttributeCommand () =
     /// The name of an attribute to set for selected elements (ignored for other node types).
     [<Parameter(ParameterSetName="AttributeValue", Mandatory=true)>]
     [<ValidateNotNullOrEmpty()>]
-    [<Alias("NameOfAttribute")>]
+    [<Alias("AN","NameOfAttribute")>]
     member val AttributeName : string = null with get, set
 
     /// The value of an attribute to set for selected elements (ignored for other node types).
     [<Parameter(ParameterSetName="AttributeValue", Mandatory=true)>]
-    [<Alias("ValueOfAttribute")>]
+    [<Alias("AV","ValueOfAttribute")>]
     member val AttributeValue : string = null with get, set
 
     /// The optional namespace URI for the attribute name.

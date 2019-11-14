@@ -30,30 +30,37 @@ This cmdlet sets the text value of a selected XML node.
 
 ### Example 1
 ```powershell
-PS C:\> (Select-Xml /a/@href -Xml ([xml]'<a href="https://example.com/">link</a>') |Set-XmlValue https://example.org/).OuterXml
+PS C:\> ('<a href="https://old.example.com/">link</a>' |Select-Xml /a/@href |Set-XmlValue https://new.example.org/).OuterXml
 
-<a href="https://example.org/">link</a>
+<a href="https://new.example.org/">link</a>
 ```
 
 ### Example 2
 ```powershell
-PS C:\> (Select-Xml /a -Xml ([xml]'<a href="https://example.com/">link</a>') |Set-XmlValue Example).OuterXml
+PS C:\> ('<a href="https://example.com/">link</a>' |Select-Xml /a |Set-XmlValue Example).OuterXml
 
 <a href="https://example.com/">Example</a>
 ```
 
 ### Example 3
 ```powershell
-PS C:\> (Select-Xml /a -Xml ([xml]'<a href="https://example.com/">link</a>') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+PS C:\> ('<a href="https://old.example.com/">link</a>' |Select-Xml /a |Set-XmlValue -AttributeName href -AttributeValue https://new.example.org/).OuterXml
 
-<a href="https://example.com/">Example</a>
+<a href="https://new.example.org/">Example</a>
 ```
 
 ### Example 4
 ```powershell
-PS C:\> (Select-Xml /a -Xml ([xml]'<a>link</a>') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+PS C:\> ('<a>link</a>' |Select-Xml /a |Set-XmlValue -AttributeName href -AttributeValue https://example.com/).OuterXml
 
 <a href="https://example.com/">Example</a>
+```
+
+### Example 5
+```powershell
+PS C:\> ('<a href="https://example.com/">link</a>' |Select-Xml /a |Set-XmlValue -AttributeName title -AttributeValue 'Example site').OuterXml
+
+<a href="https://example.com/" title="Example site">link</a>
 ```
 
 ## PARAMETERS

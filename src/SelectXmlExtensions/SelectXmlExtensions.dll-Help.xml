@@ -62,9 +62,9 @@
             <maml:para>- InsertBefore: Preceding the node.</maml:para>
             <maml:para>- PrependChild: At the beginning of the node's children.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">AddXmlNodePosition</command:parameterValue>
           <dev:type>
-            <maml:name>String</maml:name>
+            <maml:name>AddXmlNodePosition</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -105,9 +105,9 @@
           <maml:para>- InsertBefore: Preceding the node.</maml:para>
           <maml:para>- PrependChild: At the beginning of the node's children.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">AddXmlNodePosition</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>AddXmlNodePosition</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -177,6 +177,15 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; ('&lt;a /&gt;' |Select-Xml /a |Add-Xml '&lt;b /&gt;').OuterXml
+
+&lt;a&gt;&lt;b /&gt;&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Select-Xml /configuration/appSettings app.config |Add-Xml '&lt;add key="Version" value="2.0"/&gt;' -UnlessXPath 'add[@key="Version"]'</dev:code>
         <dev:remarks>
           <maml:para>The appSettings node is located in app.config, and the Version setting is added if it isn't already present.</maml:para>
@@ -262,7 +271,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Select-Xml /a -Xml ([xml]'&lt;a&gt;B&lt;/a&gt;') |Get-XmlValue
+        <dev:code>PS C:\&gt; '&lt;a&gt;B&lt;/a&gt;' |Select-Xml /a |Get-XmlValue
 
 B</dev:code>
         <dev:remarks>
@@ -271,7 +280,7 @@ B</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Select-Xml /a -Xml ([xml]'&lt;a href="https://example.org/"&gt;link&lt;/a&gt;') |Get-XmlValue
+        <dev:code>PS C:\&gt; '&lt;a href="https://example.org/"&gt;link&lt;/a&gt;' |Select-Xml /a/@href |Get-XmlValue
 
 https://example.org/</dev:code>
         <dev:remarks>
@@ -357,7 +366,16 @@ https://example.org/</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; ('&lt;a&gt;&lt;b /&gt;&lt;/a&gt;' |Select-Xml /a/b |Remove-Xml).OuterXml
+
+&lt;a /&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml</dev:code>
         <dev:remarks>
           <maml:para>Removes the specified node from the file.</maml:para>
@@ -553,16 +571,16 @@ https://example.org/</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; (Select-Xml /a/@href -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue https://example.org/).OuterXml
+        <dev:code>PS C:\&gt; ('&lt;a href="https://old.example.com/"&gt;link&lt;/a&gt;' |Select-Xml /a/@href |Set-XmlValue https://new.example.org/).OuterXml
 
-&lt;a href="https://example.org/"&gt;link&lt;/a&gt;</dev:code>
+&lt;a href="https://new.example.org/"&gt;link&lt;/a&gt;</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue Example).OuterXml
+        <dev:code>PS C:\&gt; ('&lt;a href="https://example.com/"&gt;link&lt;/a&gt;' |Select-Xml /a |Set-XmlValue Example).OuterXml
 
 &lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
         <dev:remarks>
@@ -571,7 +589,16 @@ https://example.org/</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 3 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a href="https://example.com/"&gt;link&lt;/a&gt;') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+        <dev:code>PS C:\&gt; ('&lt;a href="https://old.example.com/"&gt;link&lt;/a&gt;' |Select-Xml /a |Set-XmlValue -AttributeName href -AttributeValue https://new.example.org/).OuterXml
+
+&lt;a href="https://new.example.org/"&gt;Example&lt;/a&gt;</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; ('&lt;a&gt;link&lt;/a&gt;' |Select-Xml /a |Set-XmlValue -AttributeName href -AttributeValue https://example.com/).OuterXml
 
 &lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
         <dev:remarks>
@@ -579,10 +606,10 @@ https://example.org/</dev:code>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; (Select-Xml /a -Xml ([xml]'&lt;a&gt;link&lt;/a&gt;') |Set-XmlValue -AttributeName href -AttributeValue Example).OuterXml
+        <maml:title>-------------------------- Example 5 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; ('&lt;a href="https://example.com/"&gt;link&lt;/a&gt;' |Select-Xml /a |Set-XmlValue -AttributeName title -AttributeValue 'Example site').OuterXml
 
-&lt;a href="https://example.com/"&gt;Example&lt;/a&gt;</dev:code>
+&lt;a href="https://example.com/" title="Example site"&gt;link&lt;/a&gt;</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>

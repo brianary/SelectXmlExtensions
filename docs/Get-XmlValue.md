@@ -25,14 +25,14 @@ If selecting from a file, the file will be updated instead of returning the upda
 
 ### Example 1
 ```powershell
-PS C:\> Select-Xml /a -Xml ([xml]'<a>B</a>') |Get-XmlValue
+PS C:\> '<a>B</a>' |Select-Xml /a |Get-XmlValue
 
 B
 ```
 
 ### Example 2
 ```powershell
-PS C:\> Select-Xml /a -Xml ([xml]'<a href="https://example.org/">link</a>') |Get-XmlValue
+PS C:\> '<a href="https://example.org/">link</a>' |Select-Xml /a/@href |Get-XmlValue
 
 https://example.org/
 ```

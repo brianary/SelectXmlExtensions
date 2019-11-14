@@ -23,7 +23,14 @@ If selecting from a file, the file will be updated instead of returning the upda
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
+```powershell
+PS C:\> ('<a><b /></a>' |Select-Xml /a/b |Remove-Xml).OuterXml
+
+<a />
+```
+
+### Example 2
 ```
 Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml
 ```
