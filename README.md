@@ -1,7 +1,7 @@
 SelectXmlExtensions
 ===================
 
-<img src="SelectXmlExtensions.svg" alt="SelectXmlExtensions icon" style="float:right;margin:1ex" />
+<img src="SelectXmlExtensions.svg" alt="SelectXmlExtensions icon" align="right" />
 
 Cmdlets that use the output of Select-Xml to modify the source XML document.
 
