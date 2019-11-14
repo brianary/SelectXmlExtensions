@@ -1,6 +1,10 @@
 SelectXmlExtensions
 ===================
 
+<style>img:first-of-type { float: right; margin: 1ex; }</style>
+
+![SelectXmlExtensions icon](SelectXmlExtensions.svg)
+
 Cmdlets that use the output of Select-Xml to modify the source XML document.
 
 Cmdlets

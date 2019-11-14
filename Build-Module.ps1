@@ -1,6 +1,7 @@
 #Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0)][ValidateSet('Debug','Release')][string] $Configuration = 'Debug',
+[switch] $Publish,
 [switch] $Clean,
 [switch] $Install
 )
@@ -17,6 +18,7 @@ if($Clean)
 if((Get-Command New-ExternalHelp -EA 0)) { New-ExternalHelp docs -OutputPath .\src\SelectXmlExtensions -Force }
 else { Write-Warning 'Unable to update MAML help, is platyPS installed?' }
 dotnet build -c $Configuration
+if($Publish) {dotnet publish -c $Configuration; $pubdir += '\publish'}
 dotnet pack -c $Configuration
 (Get-Item $pubdir\SelectXmlExtensions.dll).VersionInfo
 if($Install)

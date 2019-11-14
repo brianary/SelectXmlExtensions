@@ -13,8 +13,8 @@ Insert XML into an XML document relative to a node found by Select-Xml.
 ## SYNTAX
 
 ```
-Add-Xml [-Xml] <XmlDocument[]> [-Position <String>] [[-UnlessXPath] <String>] [[-Namespace] <Hashtable>]
- -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
+Add-Xml [-Xml] <XmlDocument[]> [-Position <AddXmlNodePosition>] [[-UnlessXPath] <String>]
+ [[-Namespace] <Hashtable>] -SelectXmlInfo <SelectXmlInfo> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -62,7 +62,7 @@ Where to insert the new node(s), relative to the node found by Select-Xml.
 - PrependChild: At the beginning of the node's children.
 
 ```yaml
-Type: String
+Type: AddXmlNodePosition
 Parameter Sets: (All)
 Aliases:
 

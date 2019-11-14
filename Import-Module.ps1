@@ -1,6 +1,7 @@
 [CmdletBinding()] Param()
 pushd $PSScriptRoot
-$module = Resolve-Path .\src\SelectXmlExtensions\bin\*\*\SelectXmlExtensions.psd1 |
+$module = Resolve-Path .\src\SelectXmlExtensions\bin\*\*\SelectXmlExtensions.psd1,
+	.\src\SelectXmlExtensions\bin\*\*\publish\SelectXmlExtensions.psd1 |
 	sort LastWriteTime -Descending |
 	select -First 1
 $base = Split-Path $module
