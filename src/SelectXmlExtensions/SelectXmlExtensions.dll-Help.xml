@@ -443,7 +443,7 @@ https://example.org/</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NameOfAttribute">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="AN, NameOfAttribute">
           <maml:name>AttributeName</maml:name>
           <maml:Description>
             <maml:para>The name of an attribute to set for selected elements (ignored for other node types).</maml:para>
@@ -467,7 +467,7 @@ https://example.org/</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ValueOfAttribute">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="AV, ValueOfAttribute">
           <maml:name>AttributeValue</maml:name>
           <maml:Description>
             <maml:para>The value of an attribute to set for selected elements (ignored for other node types).</maml:para>
@@ -506,7 +506,7 @@ https://example.org/</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="NameOfAttribute">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="AN, NameOfAttribute">
         <maml:name>AttributeName</maml:name>
         <maml:Description>
           <maml:para>The name of an attribute to set for selected elements (ignored for other node types).</maml:para>
@@ -530,7 +530,7 @@ https://example.org/</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="ValueOfAttribute">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="AV, ValueOfAttribute">
         <maml:name>AttributeValue</maml:name>
         <maml:Description>
           <maml:para>The value of an attribute to set for selected elements (ignored for other node types).</maml:para>

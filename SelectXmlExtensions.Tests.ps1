@@ -15,12 +15,12 @@ Describe 'SelectXmlExtensions' {
 			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
 			$v.FileVersionRaw |Should -Not -Be $null
 			$v.FileVersionRaw.Major |Should -BeGreaterThan 0
-		} -Skip
+		}
 		It "Given the SelectXmlExtensions module, the DLL should have a nonzero product version" {
 			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
 			$v.ProductVersionRaw |Should -Not -Be $null
 			$v.ProductVersionRaw.Major |Should -BeGreaterThan 0
-		} -Skip
+		}
 		It "Given the SelectXmlExtensions module, the DLL should have a valid semantic product version" {
 			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
 			[semver]::TryParse($v.ProductVersion, [ref]$null) |Should -BeTrue

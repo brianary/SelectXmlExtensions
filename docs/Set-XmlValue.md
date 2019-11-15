@@ -104,7 +104,7 @@ The name of an attribute to set for selected elements (ignored for other node ty
 ```yaml
 Type: String
 Parameter Sets: AttributeValue
-Aliases: NameOfAttribute
+Aliases: AN, NameOfAttribute
 
 Required: True
 Position: Named
@@ -136,7 +136,7 @@ The value of an attribute to set for selected elements (ignored for other node t
 ```yaml
 Type: String
 Parameter Sets: AttributeValue
-Aliases: ValueOfAttribute
+Aliases: AV, ValueOfAttribute
 
 Required: True
 Position: Named
