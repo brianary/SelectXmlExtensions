@@ -5,7 +5,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PublishTrimmed>true</PublishTrimmed>
     <Version>1.0.1</Version>
-	<x24>$</x24>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +26,7 @@
   </ItemGroup>
 
   <Target Name="GetVersion" BeforeTargets="CoreCompile">
-    <Exec Command='pwsh -nol -noni -nop -c "&amp; { Import-LocalizedData -BindingVariable m -FileName $(MSBuildProjectName); $(x24)m.ModuleVersion }"'
+    <Exec Command='pwsh -nol -noni -nop -c "&amp; { Import-LocalizedData -BindingVariable m -FileName $(MSBuildProjectName); (gv m -va).m.ModuleVersion }"'
       ConsoleToMSBuild="true" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="Version" />
     </Exec>
