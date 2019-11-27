@@ -3,6 +3,8 @@ SelectXmlExtensions
 
 <img src="SelectXmlExtensions.svg" alt="SelectXmlExtensions icon" align="right" />
 
+[![Actions Status](https://github.com/brianary/SelectXmlExtensions/workflows/.NET%20Core/badge.svg)](https://github.com/brianary/SelectXmlExtensions/actions)
+
 Cmdlets that use the output of Select-Xml to modify the source XML document.
 
 Cmdlets
