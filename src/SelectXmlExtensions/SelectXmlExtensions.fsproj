@@ -30,6 +30,7 @@
       ConsoleToMSBuild="true" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="Version" />
     </Exec>
+	<!-- support GH Actions CI build by providing a dummy version after the Exec fails -->
 	<PropertyGroup Condition="'$(Version)'==''"><Version>1.0.0</Version></PropertyGroup>
   </Target>
 
