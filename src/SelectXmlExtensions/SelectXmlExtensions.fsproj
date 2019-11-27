@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <Target Name="GetVersion" BeforeTargets="CoreCompile">
-    <Exec Command='pwsh -nol -noni -nop -c "&amp; { Import-LocalizedData -BindingVariable m -FileName $(MSBuildProjectName); $m.ModuleVersion }"'
+    <Exec Command='pwsh -nol -noni -nop -c "&amp; { Import-LocalizedData -BindingVariable m -FileName $(MSBuildProjectName); &#x24;m.ModuleVersion }"'
       ConsoleToMSBuild="true" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="Version" />
     </Exec>
