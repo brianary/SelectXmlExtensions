@@ -32,7 +32,11 @@
     </Exec>
   </Target>
 
+  <Target Name="doc" DependsOnTargets="Documentation" />
+
   <Target Name="Documentation" DependsOnTargets="Publish">
+    <Copy SourceFiles="$(OutputPath)\publish\FSharp.Core.dll"
+      DestinationFolder="$(OutputPath)" />
     <Exec Command='pwsh -nol -noni -nop -c "&amp; { Import-Module (Resolve-Path $(OutputPath)*.psd1); New-MarkdownHelp -Module $(MSBuildProjectName) -OutputFolder ..\..\docs -ea 0; Update-MarkdownHelp ..\..\docs; New-ExternalHelp ..\..\docs -OutputPath . -Force }"'
       IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" />
   </Target>
