@@ -1,9 +1,6 @@
-# Pester test, see https://github.com/Pester/Pester/wiki
-# Invoke-Pester .\SelectXmlExtensions.Tests.ps1
-
-& "$PSScriptRoot\Build-Module.ps1"
-& "$PSScriptRoot\Import-Module.ps1"
-
+# Pester tests, see https://github.com/Pester/Pester/wiki
+$envPath = $env:Path # avoid testingc the wrong cmdlets
+Import-Module (Resolve-Path ./src/*/bin/Debug/*/*.psd1) -vb
 Describe 'SelectXmlExtensions' {
 	Context 'SelectXmlExtensions module' {
 		It "Given the SelectXmlExtensions module, it should have a nonzero version" {
@@ -156,3 +153,4 @@ Describe 'SelectXmlExtensions' {
 		}
 	}
 }
+$env:Path = $envPath
