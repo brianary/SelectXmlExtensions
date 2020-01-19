@@ -1,28 +1,25 @@
 # Pester tests, see https://github.com/Pester/Pester/wiki
 $envPath = $env:Path # avoid testing the wrong cmdlets
-Import-Module (Resolve-Path ./src/*/bin/Debug/*/*.psd1) -vb
-Describe 'SelectXmlExtensions' {
-	Context 'SelectXmlExtensions module' {
-		It "Given the SelectXmlExtensions module, it should have a nonzero version" {
-			$m = Get-Module SelectXmlExtensions
-			$m.Version |Should -Not -Be $null
-			$m.Version.Major |Should -BeGreaterThan 0
+$module = Import-Module (Resolve-Path ./src/*/bin/Debug/*/*.psd1) -PassThru -vb
+Import-LocalizedData -BindingVariable manifest -BaseDirectory ./src/* -FileName (Split-Path $PWD -Leaf)
+Describe $module.Name {
+    Context "$($module.Name) module" -Tag Module {
+        It "Given the module, the version should match the manifest version" {
+            $module.Version |Should -BeExactly $manifest.ModuleVersion
+        }
+		It "Given the module, the DLL file version should match the manifest version" {
+            (Get-Item "$($module.ModuleBase)\$($module.Name).dll").VersionInfo.FileVersionRaw |
+                Should -BeLike "$($manifest.ModuleVersion)*"
 		}
-		It "Given the SelectXmlExtensions module, the DLL should have a nonzero file version" {
-			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
-			$v.FileVersionRaw |Should -Not -Be $null
-			$v.FileVersionRaw.Major |Should -BeGreaterThan 0
-		}
-		It "Given the SelectXmlExtensions module, the DLL should have a nonzero product version" {
-			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
-			$v.ProductVersionRaw |Should -Not -Be $null
-			$v.ProductVersionRaw.Major |Should -BeGreaterThan 0
-		}
-		It "Given the SelectXmlExtensions module, the DLL should have a valid semantic product version" {
-			$v = (Get-Item "$((Get-Module SelectXmlExtensions).ModuleBase)\SelectXmlExtensions.dll").VersionInfo
-			[semver]::TryParse($v.ProductVersion, [ref]$null) |Should -BeTrue
-		} -Skip
-	}
+		It "Given the module, the DLL product version should match the manifest version" {
+            (Get-Item "$($module.ModuleBase)\$($module.Name).dll").VersionInfo.ProductVersionRaw |
+                Should -BeLike "$($manifest.ModuleVersion)*"
+		} -Pending
+		It "Given the module, the DLL should have a valid semantic product version" {
+			$v = (Get-Item "$($module.ModuleBase)\$($module.Name).dll").VersionInfo.ProductVersion
+			[semver]::TryParse($v, [ref]$null) |Should -BeTrue
+		} -Pending
+    }
 	Context Add-Xml {
 		It ("Given source document '<XmlDocument>' searched for '<XPath>', " +
 			"adding -Xml '<Xml>' at the default position eventually returns '<Expected>'") -TestCases @(
