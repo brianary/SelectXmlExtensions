@@ -3,8 +3,8 @@ SelectXmlExtensions
 
 <img src="SelectXmlExtensions.svg" alt="SelectXmlExtensions icon" align="right" />
 
-![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/SelectXmlExtensions)
-![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/SelectXmlExtensions)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/SelectXmlExtensions)](https://www.powershellgallery.com/packages/SelectXmlExtensions/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/SelectXmlExtensions)](https://www.powershellgallery.com/packages/SelectXmlExtensions/)
 [![Actions Status](https://github.com/brianary/SelectXmlExtensions/workflows/.NET%20Core/badge.svg)](https://github.com/brianary/SelectXmlExtensions/actions)
 
 Cmdlets that use the output of Select-Xml to modify the source XML document.
