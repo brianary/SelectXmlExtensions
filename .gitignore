@@ -5,3 +5,6 @@ bin/
 obj/
 packages/
 paket-files/
+
+.fake
+.ionide
