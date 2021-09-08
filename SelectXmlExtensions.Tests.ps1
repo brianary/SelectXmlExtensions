@@ -149,5 +149,5 @@ Describe $module.Name {
 				Should -BeExactly $Expected
 		}
 	}
-}
+}.GetNewClosure()
 $env:Path = $envPath
