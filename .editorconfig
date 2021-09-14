@@ -5,17 +5,20 @@ root = true
 
 # defaults
 [*]
-indent_style             = tab
+indent_style             = space
 indent_size              = 4
 tab_width                = 4
 end_of_line              = crlf
-charset                  = utf-8-bom
+charset                  = utf-8
 trim_trailing_whitespace = true
 insert_final_newline     = true
-max_line_length          = 128
+max_line_length          = 80
 
 [*.{fs,fsx}]
 indent_style = space
+
+[*.ps1]
+indent_style = tab
 
 # git
 [{.gitattributes,CODEOWNERS}]
