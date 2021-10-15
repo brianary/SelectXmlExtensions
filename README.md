@@ -9,6 +9,8 @@ SelectXmlExtensions
 
 Cmdlets that use the output of Select-Xml to modify the source XML document.
 
+To install: `Install-Module SelectXmlExtensions`
+
 ![example usage of SelectXmlExtensions](SelectXmlExtensions.gif)
 
 Cmdlets
