@@ -1,6 +1,7 @@
 SelectXmlExtensions
 ===================
 
+<!-- To publish to PowerShell Gallery, commit an update to the .psd1 file -->
 <img src="SelectXmlExtensions.svg" alt="SelectXmlExtensions icon" align="right" />
 
 [![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/SelectXmlExtensions)](https://www.powershellgallery.com/packages/SelectXmlExtensions/)
