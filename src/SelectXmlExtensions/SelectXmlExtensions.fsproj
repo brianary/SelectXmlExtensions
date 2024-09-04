@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.7.0" />
+    <PackageReference Include="FSharp.Core" Version="8.0.400" />
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.2.1" />
   </ItemGroup>
 
