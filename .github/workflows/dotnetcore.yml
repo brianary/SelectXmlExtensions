@@ -4,9 +4,9 @@ jobs:
   ci-linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
     - name: Build
@@ -18,7 +18,7 @@ jobs:
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 2
     - name: Module update check
@@ -27,7 +27,7 @@ jobs:
       run: |
         Write-Host "::set-output name=is_module_update::$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)"
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
     - name: Build
