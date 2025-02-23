@@ -1,4 +1,5 @@
 .*/
+!.github/
 !.paket/
 bin/
 obj/
@@ -7,3 +8,5 @@ paket-files/
 
 .fake
 .ionide
+!.gitignore
+!.editorconfig
