@@ -1,14 +1,16 @@
-name: .NET Core
-on: push
+name: .NET deployment
+on:
+  push:
+    branches: [ 'main' ]
 jobs:
   ci-linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Build
       run: dotnet build -c Release
     - name: Test
@@ -26,10 +28,10 @@ jobs:
       shell: pwsh
       run: |
         Write-Host "::set-output name=is_module_update::$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)"
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Build
       run: dotnet build -c Release
     - name: Test
