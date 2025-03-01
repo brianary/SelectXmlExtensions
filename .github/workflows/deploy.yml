@@ -11,8 +11,6 @@ jobs:
   setup:
     name: Setup and confirm module change
     runs-on: windows-latest
-    outputs:
-      is_module_update: ${{ steps.is_module_update_test }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -21,11 +19,11 @@ jobs:
     - name: Module update check
       id: is_module_update_test
       run: |
-        "is_module_update=$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)" >> $GITHUB_OUTPUT
+        "is_module_update=$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)" >> $GITHUB_ENV
   publish:
     name: Publish to PowerShell Gallery
     needs: setup
-    if: ${{ needs.setup.outputs.is_module_update == 'True' }}
+    if: github.env.is_module_update == 'True'
     runs-on: windows-latest
     env:
       gallerykey: ${{ secrets.gallerykey }}
