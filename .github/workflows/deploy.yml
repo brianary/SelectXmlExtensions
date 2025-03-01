@@ -14,14 +14,13 @@ jobs:
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
-    - name: Check that module manifest (.psd1) was updated
-      id: what_changed
-      uses: umani/changed-files@v4.2.0
-      with:
-        repo-token: ${{ github.token }}
-        pattern: '\.psd1$'
+    - name: Module update check
+      id: is_module_update_test
+      shell: pwsh
+      run: |
+        Write-Host "::set-output name=is_module_update::$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)"
     - name: Publish
-      if: success() && env.gallerykey && steps.what_changed.outputs.files_updated
+      if: success() && env.gallerykey && steps.is_module_update_test.outputs.is_module_update == 'True'
       run: |
         dotnet publish -c Release
         $MSBuildProjectName = [io.path]::GetFileNameWithoutExtension("$(Resolve-Path ./src/*/*.fsproj)")
