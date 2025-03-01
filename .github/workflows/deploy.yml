@@ -24,6 +24,7 @@ jobs:
       run: |
         "is_module_update=$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)" >> $GITHUB_OUTPUT
     - name: Build
+      if: success() && env.gallerykey && steps.is_module_update_test.outputs.is_module_update == 'True'
       run: dotnet build -c Release
     - name: Publish
       if: success() && env.gallerykey && steps.is_module_update_test.outputs.is_module_update == 'True'
