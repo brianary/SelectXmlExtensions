@@ -14,11 +14,15 @@ jobs:
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Module update check
       id: is_module_update_test
       shell: pwsh
       run: |
         Write-Host "::set-output name=is_module_update::$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)"
+    - name: Build
+      run: dotnet build -c Release
     - name: Publish
       if: success() && env.gallerykey && steps.is_module_update_test.outputs.is_module_update == 'True'
       run: |
