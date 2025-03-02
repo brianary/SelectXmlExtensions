@@ -11,21 +11,24 @@ jobs:
   setup:
     name: Setup and confirm module change
     runs-on: windows-latest
+    outputs:
+      psd1_changed: ${{ steps.has_psd1_changed.outputs.psd1_changed }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: 2
     - name: Module update check
-      id: is_module_update_test
+      id: has_psd1_changed
       continue-on-error: true
-      run: |
-        git diff --exit-code --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)
+      run: >
+        "psd1_changed=$(@(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count)"
+        >> $GITHUB_OUTPUT
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
     needs: setup
-    if: ${{ ! needs.setup.result }}
+    if: ${{ needs.setup.outputs.psd1_changed }}
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:

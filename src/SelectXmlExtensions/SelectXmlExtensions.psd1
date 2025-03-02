@@ -17,14 +17,14 @@ VariablesToExport = @() # '*'
 # AliasesToExport = 'axml', 'gxml', 'rxml', 'sxml'
 FileList = 'SelectXmlExtensions.dll', 'SelectXmlExtensions.dll-Help.xml'
 PrivateData = @{
-    PSData = @{
-        Tags = 'XML', 'SelectXmlInfo'
-        LicenseUri = 'https://github.com/brianary/SelectXmlExtensions/blob/master/LICENSE'
-        ProjectUri = 'https://github.com/brianary/SelectXmlExtensions/'
-        IconUri = 'http://webcoder.info/images/SelectXmlExtensions.svg'
+	PSData = @{
+		Tags = 'XML', 'SelectXmlInfo'
+		LicenseUri = 'https://github.com/brianary/SelectXmlExtensions/blob/master/LICENSE'
+		ProjectUri = 'https://github.com/brianary/SelectXmlExtensions/'
+		IconUri = 'http://webcoder.info/images/SelectXmlExtensions.svg'
 		# ReleaseNotes = ''
 		# PS7: A list of external modules that this module is dependent upon.
 		# ExternalModuleDependencies = ,'Microsoft.PowerShell.Utility'
-    }
+	}
 }
 }
