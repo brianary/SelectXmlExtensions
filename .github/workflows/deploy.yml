@@ -21,9 +21,10 @@ jobs:
     - name: Module update check
       id: has_psd1_changed
       continue-on-error: true
-      run: >
-        "psd1_changed=$(@(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count)"
-        >> $env:GITHUB_OUTPUT
+      run: |
+        $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
+        "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
+        Get-Content $env:GITHUB_OUTPUT -Raw
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
