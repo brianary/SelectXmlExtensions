@@ -27,7 +27,7 @@ jobs:
       continue-on-error: true
       run: >
         "psd1_changed=$(@(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count)"
-        >> $GITHUB_OUTPUT
+        >> $env:GITHUB_OUTPUT
   debug:
     name: Debug output
     runs-on: windows-latest
