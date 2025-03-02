@@ -25,7 +25,7 @@ jobs:
     name: No change
     runs-on: windows-latest
     needs: setup
-    if: ${{ ! needs.setup.result }}
+    if: ${{ needs.setup.result }}
     steps:
     - name: Completion message
       run: |
@@ -37,10 +37,12 @@ jobs:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
     needs: setup
-    if: ${{ needs.setup.result }}
+    if: ${{ ! needs.setup.result }}
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Build
       if: success() && env.gallerykey
       run: dotnet build -c Release
