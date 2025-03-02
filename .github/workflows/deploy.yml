@@ -18,13 +18,14 @@ jobs:
         fetch-depth: 2
     - name: Module update check
       id: is_module_update_test
+      continue-on-error: true
       run: |
-        "is_module_update=$(@(git diff --name-only HEAD~ HEAD -- "$(Resolve-Path .\src\*\*.psd1)").Count -gt 0)" >> $GITHUB_ENV
+        git diff --exit-code --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)
   done:
     name: No change
     runs-on: windows-latest
     needs: setup
-    if: github.env.is_module_update == 'False'
+    if: ${{ ! needs.setup.result }}
     steps:
     - name: Completion message
       run: |
@@ -36,7 +37,7 @@ jobs:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
     needs: setup
-    if: github.env.is_module_update == 'True'
+    if: ${{ needs.setup.result }}
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
