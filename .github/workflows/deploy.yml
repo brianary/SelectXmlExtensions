@@ -21,18 +21,6 @@ jobs:
       continue-on-error: true
       run: |
         git diff --exit-code --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)
-  done:
-    name: No change
-    runs-on: windows-latest
-    needs: setup
-    if: ${{ needs.setup.result }}
-    steps:
-    - name: Completion message
-      run: |
-        @"
-        Module version did not change.
-        Be sure to update the version in the psd1 file if this was not expected
-        "@
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
@@ -49,10 +37,10 @@ jobs:
     - name: Publish
       if: success() && env.gallerykey
       run: |
+        #Requires -Version 7
         dotnet publish -c Release
-        $MSBuildProjectName = [io.path]::GetFileNameWithoutExtension("$(Resolve-Path ./src/*/*.fsproj)")
-        $env:PSModulePath -split ';' |
-            ForEach-Object {"$_/$MSBuildProjectName"} |
+        $MSBuildProjectName = Resolve-Path src/*/*.fsproj |Split-Path -LeafBase
+        Join-Path ($env:PSModulePath -split ';') $MSBuildProjectName |
             Where-Object {Test-Path $_ -Type Container} |
             Remove-Item -Recurse -Force
         Push-Location ./src/*/bin/Release/*/publish
