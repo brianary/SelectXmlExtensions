@@ -18,12 +18,41 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 2
+    - name: Module update check (debug)
+      continue-on-error: true
+      run: >
+        "psd1_changed=$(@(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count)"
     - name: Module update check
       id: has_psd1_changed
       continue-on-error: true
       run: >
         "psd1_changed=$(@(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count)"
         >> $GITHUB_OUTPUT
+  debug:
+    name: Debug output
+    runs-on: windows-latest
+    needs: setup
+    env:
+      psd1_changed: ${{ needs.setup.outputs.psd1_changed }}
+    steps:
+    - name: Message
+      run: |
+        @"
+        github.env.psd1_changed=${{ github.env.psd1_changed }}
+        needs.setup.outputs.psd1_changed=${{ needs.setup.outputs.psd1_changed }}
+        "@
+  done:
+    name: No change
+    runs-on: windows-latest
+    needs: setup
+    if: ${{ ! needs.setup.outputs.psd1_changed }}
+    steps:
+    - name: Completion message
+      run: |
+        @"
+        Module version did not change.
+        Be sure to update the version in the psd1 file if this was not expected
+        "@
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
