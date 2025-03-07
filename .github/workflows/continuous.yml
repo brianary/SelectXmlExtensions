@@ -9,6 +9,6 @@ jobs:
           os: [ubuntu-latest, windows-latest]
     steps:
     - name: .NET CI
-      uses: brianary/dotnet-ci@f9319da35ece70e8d32445a2e0e01d213988a86f
+      uses: brianary/dotnet-ci@bf5c5c3380b390db846da8ff3e1b0972ea16e257
       with:
         test-target: Test
