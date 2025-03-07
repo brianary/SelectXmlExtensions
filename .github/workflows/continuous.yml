@@ -11,4 +11,4 @@ jobs:
     - name: .NET CI
       uses: brianary/dotnet-ci@bf5c5c3380b390db846da8ff3e1b0972ea16e257
       with:
-        test-target: Test
+        test-target: test
