@@ -8,13 +8,7 @@ jobs:
       matrix:
           os: [ubuntu-latest, windows-latest]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+    - name: .NET CI
+      uses: brianary/dotnet-ci@695187
       with:
-        dotnet-version: 8.0.x
-    - name: Build
-      run: dotnet build -c Release
-    - name: Test
-      run: dotnet publish -t:test
+        test-target: Test
