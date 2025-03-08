@@ -7,8 +7,13 @@ jobs:
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest]
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
     steps:
-    - name: .NET CI
-      uses: brianary/dotnet-ci@2de5e2d1ac5813f118283741f1afba8e25aaf4c1
-      with:
-        test-target: test
+      - name: .NET CI
+        uses: brianary/dotnet-ci@cf4555c75ff04842fe344389f168b471397274d6
+        with:
+          test-target: test
