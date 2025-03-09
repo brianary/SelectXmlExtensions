@@ -14,19 +14,17 @@ jobs:
     outputs:
       psd1_changed: ${{ steps.has_psd1_changed.outputs.psd1_changed }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        sparse-checkout: src/*/*.psd1
-        fetch-depth: 2
-    - name: Module update check
-      id: has_psd1_changed
-      continue-on-error: true
-      run: |
-        gci -r
-        $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
-        "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
-        Get-Content $env:GITHUB_OUTPUT -Raw
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Module update check
+        id: has_psd1_changed
+        continue-on-error: true
+        run: |
+          $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
+          "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
+          Get-Content $env:GITHUB_OUTPUT -Raw
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
@@ -35,25 +33,25 @@ jobs:
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Build
-      if: success() && env.gallerykey
-      run: dotnet build -c Release
-    - name: Publish
-      if: success() && env.gallerykey
-      run: |
-        #Requires -Version 7
-        dotnet publish -c Release
-        $MSBuildProjectName = Resolve-Path src/*/*.fsproj |Split-Path -LeafBase
-        Join-Path ($env:PSModulePath -split ';') $MSBuildProjectName |
-            Where-Object {Test-Path $_ -Type Container} |
-            Remove-Item -Recurse -Force
-        Push-Location ./src/*/bin/Release/*/publish
-        Import-LocalizedData Module -FileName $MSBuildProjectName -BaseDirectory "$PWD"
-        $Version = $Module.ModuleVersion
-        $InstallPath = "$env:UserProfile/Documents/PowerShell/Modules/$MSBuildProjectName/$Version"
-        if(!(Test-Path $InstallPath -Type Container)) {mkdir $InstallPath}
-        Copy-Item * -Destination $InstallPath
-        Pop-Location
-        Publish-Module -Name $MSBuildProjectName -NuGetApiKey $env:gallerykey
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        if: success() && env.gallerykey
+        run: dotnet build -c Release
+      - name: Publish
+        if: success() && env.gallerykey
+        run: |
+          #Requires -Version 7
+          dotnet publish -c Release
+          $MSBuildProjectName = Resolve-Path src/*/*.fsproj |Split-Path -LeafBase
+          Join-Path ($env:PSModulePath -split ';') $MSBuildProjectName |
+              Where-Object {Test-Path $_ -Type Container} |
+              Remove-Item -Recurse -Force
+          Push-Location ./src/*/bin/Release/*/publish
+          Import-LocalizedData Module -FileName $MSBuildProjectName -BaseDirectory "$PWD"
+          $Version = $Module.ModuleVersion
+          $InstallPath = "$env:UserProfile/Documents/PowerShell/Modules/$MSBuildProjectName/$Version"
+          if(!(Test-Path $InstallPath -Type Container)) {mkdir $InstallPath}
+          Copy-Item * -Destination $InstallPath
+          Pop-Location
+          Publish-Module -Name $MSBuildProjectName -NuGetApiKey $env:gallerykey
