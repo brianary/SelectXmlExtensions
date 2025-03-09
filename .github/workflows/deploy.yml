@@ -25,11 +25,29 @@ jobs:
           $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
           "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
           Get-Content $env:GITHUB_OUTPUT -Raw
+      - name: Try changed files approach
+        id: try-psd1-changed
+        uses: tj-actions/changed-files@v45
+        with:
+          files: src/*/*.psd1
+      - name: Check changed files output
+        env:
+          try_psd1_has_changed: ${{ steps.try-psd1-changed.outputs.any_changed }}
+        run: |
+          "changed? $env:try_psd1_has_changed"
+      - name: Did change
+        if: ${{ steps.try-psd1-changed.outputs.any_changed == 'true' }}
+        run: |
+          "Changed!"
+      - name: Did not change
+        if: ${{ steps.try-psd1-changed.outputs.any_changed != 'true' }}
+        run: |
+          "Did not change."
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
     needs: setup
-    if: ${{ needs.setup.outputs.psd1_changed }}
+    if: ${{ needs.setup.outputs.psd1_changed }}e
     env:
       gallerykey: ${{ secrets.gallerykey }}
     steps:

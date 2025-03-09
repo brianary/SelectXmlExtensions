@@ -2,7 +2,7 @@
 # and https://docs.microsoft.com/powershell/module/microsoft.powershell.core/new-modulemanifest
 @{
 RootModule = 'SelectXmlExtensions.dll'
-ModuleVersion = '1.1.10' # retry 2025-03-02T12:40
+ModuleVersion = '1.1.10' # testing
 CompatiblePSEditions = @('Core')
 GUID = 'b830f4ec-f7cf-4df4-97bb-aaa13fb125c9'
 Author = 'Brian Lalonde'
