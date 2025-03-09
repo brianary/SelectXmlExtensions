@@ -14,6 +14,6 @@ jobs:
       pull-requests: write
     steps:
     - name: .NET CI
-      uses: brianary/dotnet-ci@9e80f76cef68c6d72fd2837f6c63a987fea6f67e
+      uses: brianary/dotnet-ci@6068edc1ac90a293551ef4cc537b515d039ba72c
       with:
         test-target: test
