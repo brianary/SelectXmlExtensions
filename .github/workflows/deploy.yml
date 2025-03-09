@@ -17,11 +17,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
+        sparse-checkout: src/*/*.psd1
         fetch-depth: 2
     - name: Module update check
       id: has_psd1_changed
       continue-on-error: true
       run: |
+        gci -r
         $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
         "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
         Get-Content $env:GITHUB_OUTPUT -Raw
