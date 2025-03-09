@@ -41,7 +41,7 @@
 
   <Target Name="Pester" DependsOnTargets="Publish" Condition="'$(Configuration)' == 'Debug'">
     <Copy SourceFiles="$(OutputPath)\publish\FSharp.Core.dll" DestinationFolder="$(OutputPath)" />
-    <Exec Command="pwsh -noni -nop -c &quot;cd ..\..; Invoke-Pester -Configuration @{TestResult=@{Enabled=1}}&quot;"
+    <Exec Command="pwsh -noni -nop -c &quot;cd ..\..; Invoke-Pester -Configuration @{TestResult=@{Enabled=!0}}&quot;"
       IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" />
   </Target>
 
