@@ -1,75 +1,15 @@
-name: PowerShell module deployment
+name: Publish module to PowerShell Gallery
 on:
   workflow_run:
     workflows: [".NET build and test"]
     types: [completed]
     branches: [main]
-defaults:
-  run:
-    shell: pwsh
 jobs:
-  setup:
-    name: Setup and confirm module change
-    runs-on: windows-latest
-    outputs:
-      psd1_changed: ${{ steps.has_psd1_changed.outputs.psd1_changed }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - name: Module update check
-        id: has_psd1_changed
-        continue-on-error: true
-        run: |
-          $change = @(git diff --name-only HEAD~ HEAD -- (Resolve-Path .\src\*\*.psd1)).Count
-          "psd1_changed=$( $change ? $true : $null )" >> $env:GITHUB_OUTPUT
-          Get-Content $env:GITHUB_OUTPUT -Raw
-      - name: Try changed files approach
-        id: try-psd1-changed
-        uses: tj-actions/changed-files@v45
-        with:
-          files: src/*/*.psd1
-      - name: Check changed files output
-        env:
-          try_psd1_has_changed: ${{ steps.try-psd1-changed.outputs.any_changed }}
-        run: |
-          "changed? $env:try_psd1_has_changed"
-      - name: Did change
-        if: ${{ steps.try-psd1-changed.outputs.any_changed == 'true' }}
-        run: |
-          "Changed!"
-      - name: Did not change
-        if: ${{ steps.try-psd1-changed.outputs.any_changed != 'true' }}
-        run: |
-          "Did not change."
   publish:
     name: Publish to PowerShell Gallery
     runs-on: windows-latest
-    needs: setup
-    if: ${{ needs.setup.outputs.psd1_changed }}e
-    env:
-      gallerykey: ${{ secrets.gallerykey }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        if: success() && env.gallerykey
-        run: dotnet build -c Release
-      - name: Publish
-        if: success() && env.gallerykey
-        run: |
-          #Requires -Version 7
-          dotnet publish -c Release
-          $MSBuildProjectName = Resolve-Path src/*/*.fsproj |Split-Path -LeafBase
-          Join-Path ($env:PSModulePath -split ';') $MSBuildProjectName |
-              Where-Object {Test-Path $_ -Type Container} |
-              Remove-Item -Recurse -Force
-          Push-Location ./src/*/bin/Release/*/publish
-          Import-LocalizedData Module -FileName $MSBuildProjectName -BaseDirectory "$PWD"
-          $Version = $Module.ModuleVersion
-          $InstallPath = "$env:UserProfile/Documents/PowerShell/Modules/$MSBuildProjectName/$Version"
-          if(!(Test-Path $InstallPath -Type Container)) {mkdir $InstallPath}
-          Copy-Item * -Destination $InstallPath
-          Pop-Location
-          Publish-Module -Name $MSBuildProjectName -NuGetApiKey $env:gallerykey
+      - name: Publish module
+        uses: brianary/powershell-gallery-publish@v1
+        with:
+          gallery-key: ${{ secrets.gallerykey }}
