@@ -2,12 +2,12 @@
 # and https://docs.microsoft.com/powershell/module/microsoft.powershell.core/new-modulemanifest
 @{
 RootModule = 'SelectXmlExtensions.dll'
-ModuleVersion = '1.1.15'
+ModuleVersion = '1.1.16'
 CompatiblePSEditions = @('Core')
 GUID = 'b830f4ec-f7cf-4df4-97bb-aaa13fb125c9'
 Author = 'Brian Lalonde'
 CompanyName = 'Unknown'
-Copyright = 'Copyright © 2019 Brian Lalonde'
+Copyright = 'Copyright © 2025 Brian Lalonde'
 Description = 'PowerShell cmdlets that Select-Xml can compose into pipelines'
 PowerShellVersion = '7.0'
 # RequiredModules = ,'Microsoft.PowerShell.Utility'
