@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <PublishSingleFile>false</PublishSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AddXmlCommand.fs" />
+    <Compile Include="RemoveXmlCommand.fs" />
+    <Compile Include="GetXmlValueCommand.fs" />
+    <Compile Include="SetXmlValueCommand.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.4.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildProjectName).psd1" Pack="true" CopyToOutputDirectory="Always" />
+    <None Include="$(MSBuildProjectName).dll-Help.xml" Pack="true" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
+    <PSModulePath Include="$(PSModulePath)" Exclude="C:\Program Files\**;C:\Windows\**;C:\ProgramData\chocolatey\**" />
+  </ItemGroup>
+
+</Project>
